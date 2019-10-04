@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        ul{ list-style: none;}
+        li{ padding: 10px;}
+        a{ text-decoration: none;}
+        .border-gray{ border: 2px solid darkgray;}
+    </style>
+</head>
+<body>
+
+<div id="demo">
+    <img  v-for="(item,index) in list" :key="index" :src="item .url" style="background: black"  width="300" height="300">
+    <ul style=" display: inline-block; vertical-align: top;">
+        <li v-for="(item,index) in list" :key="index" :class="{'border-gray':current==index}" @click="doClick(index)"><img :src="item.url" style="width: 50px; height: 50px;">{{item.name}}<a href="#"></a></li>
+    </ul>
+</div>
+
+<script>
+  new Vue({
+      el:'#demo',
+      data:function(){
+          return{
+              list:[
+                  {name:'MAX9.5,2500毫安【橙色】寝室小电扇',url:'http://img.alicdn.com/imgextra/i3/1854881575/O1CN01Syx3lz1NVOK81gb0J_!!1854881575.jpg_430x430q90.jpg'},
+                  {name:'MAX7.5,2000毫安【粉色】寝室小电扇',url:'http://img.alicdn.com/imgextra/i1/1854881575/TB22OmOCr5YBuNjSspoXXbeNFXa_!!1854881575.jpg_430x430q90.jpg'},
+                  {name:'MAX7.5,2000毫安【蓝色】寝室小电扇',url:'http://img.alicdn.com/imgextra/i1/1854881575/O1CN01nMtYvB1NVOKAfM7A4_!!1854881575.jpg_430x430q90.jpg'}
+                  ],
+              current:0
+          }
+      },
+      methods:{
+          doClick:function (index) {
+              this.current = index;
+          }
+      }
+
+  })
+
+</script>
+
+</body>
+</html>

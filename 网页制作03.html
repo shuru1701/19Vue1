@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        td{ padding: 10px;}
+    </style>
+</head>
+<body>
+
+<table bgcolor="black" id="table">
+    <thead>
+    <tr bgcolor="white">
+        <td><input type="checkbox" @change="change" v-model="all">全选</td>
+        <td>商品序号</td>
+        <td>商品编号</td>
+        <td>商品名称</td>
+        <td>商品数量</td>
+        <td>商品单价</td>
+        <td>移除</td>
+    </tr>
+    <tr v-for="(item,index) in list" :key="index" bgcolor="white">
+        <td><input type="checkbox" v-model="items" :value="index+1" >选择</td>
+        <td>{{item.id}}</td>
+        <td>{{item.bh}}</td>
+        <td>{{item.name}}</td>
+        <td><input type="button" value="+" @click="sub(index)">{{item.count}}<input type="button" value="-" @click="redu(index)"></td>
+        <td>{{item.price}}</td>
+        <td><input type="button" value="移除" @click="del(index)"></td>
+    </tr>
+    <tr bgcolor="white" v-if="list.length">
+        <td colspan="7">总价为:<span style="font-size: 30px; color: red">{{sum}}</span>元</td>
+    </tr>
+    <tr bgcolor="white" v-else>
+        <td colspan="7">购物车内无物品</td>
+    </tr>
+    </thead>
+
+</table>
+
+<script>
+
+
+    new Vue({
+        el: '#table',
+        data() {
+            return {
+                list: [{id: '1', bh: '0001', name: 'iphoneX', price: '6188', count: '1'},
+                    {id: '2', bh: '0002', name: '华为P30', price: '5934', count: '1'},
+                    {id: '3', bh: '0003', name: '小米ReadmiBook', price: '4299', count: '1'},
+                    {id: '4', bh: '0004', name: '华为畅享9e', price: '799', count: '1'}],
+                items:[],
+                all:false
+            }
+        },
+        methods: {
+            sub(index) {
+                this.list[index].count++;
+            },
+            redu(index) {
+                if (this.list[index].count > 1) {
+                    this.list[index].count--;
+                }
+            },
+            del(index) {
+                this.list.splice(index, 1);
+            },
+            change:function () {
+                if(this.all)this.items=[1,2,3,4];
+                else this.items=[]
+            }
+
+
+        },
+        computed:{
+            sum:function () {
+                var sum=0
+                    for (var i = 0; i < this.list.length; i++) {
+                        if(this.items[i]==1)sum += this.list[0].count * this.list[0].price
+                        if(this.items[i]==2)sum += this.list[1].count * this.list[1].price
+                        if(this.items[i]==3)sum += this.list[2].count * this.list[2].price
+                        if(this.items[i]==4)sum += this.list[3].count * this.list[3].price
+                    }
+                return sum
+            }
+
+        }
+
+
+
+
+
+    })
+
+</script>
+
+</body>
+</html>
